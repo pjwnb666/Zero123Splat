@@ -108,8 +108,8 @@ def save_images_bin_txt(out_dir: Path, extrinsics_w2c: np.ndarray, image_files: 
 
 def prepare_images_folder(scene_dir: Path) -> Path:
     """
-    在 scene_dir 下建立 images/ 并把该目录下的 jpg/png 图片移入其中。
-    如目标文件已存在则跳过，不重复移动。
+    Create images/ under scene_dir and move the jpg/png images in this directory into it.
+    If the target file already exists, it will be skipped and the move will not be repeated.
     """
     images_dir = scene_dir / "images"
     images_dir.mkdir(parents=True, exist_ok=True)
@@ -119,7 +119,7 @@ def prepare_images_folder(scene_dir: Path) -> Path:
         if p.is_file() and p.suffix.lower() in exts:
             target = images_dir / p.name
             if not target.exists():
-                # 用 rename 更快；跨分区时可换成 shutil.move(str(p), str(target))
+                # It is faster to use rename; when crossing partitions, it can be replaced by shutil.move(str(p), str(target))
                 p.rename(target)
     return images_dir
 
